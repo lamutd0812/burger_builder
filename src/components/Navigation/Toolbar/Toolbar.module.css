@@ -22,4 +22,15 @@
 
  .Logo {
      height: 80%;
+     margin-left: 130px;
+ }
+
+ .Login {
+     color: white;
+ }
+
+ @media (max-width: 499px) {
+     .DesktopOnly {
+         display: none;
+     }
  }
