@@ -11,6 +11,7 @@ class Checkout extends Component {
     }
 
     componentWillMount() {
+        // see 215 (07:00): Why not componentDidMount? 
         const query = new URLSearchParams(this.props.location.search); // docs: https://www.jackfranklin.co.uk/blog/url-search-params/
         const ingredients = {}; // ingredients received from OrderSumary (BurgerBuilder)
         let price = 0;
