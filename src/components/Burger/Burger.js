@@ -13,6 +13,7 @@ const burger = (props) => {
         .reduce((arr, el) => {
             return arr.concat(el);
         }, []);
+        // more about this: https://techmaster.vn/posts/34372/hieu-ve-map-filter-va-reduce-trong-javascript
     console.log(transformedIngredients);
 
     if (transformedIngredients.length === 0) {
