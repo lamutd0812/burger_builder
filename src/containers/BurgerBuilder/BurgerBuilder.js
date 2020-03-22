@@ -30,6 +30,7 @@ class BurgerBuilder extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props);
         axios.get('https://react-burger-builder-d6219.firebaseio.com/ingredients.json')
             .then(response => {
                 this.setState({ ingredients: response.data });
@@ -93,32 +94,19 @@ class BurgerBuilder extends Component {
 
     purchaseContinueHandler = () => {
         // alert('You continue!');
-        this.setState({ loading: true });
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: 'Lam Nguyen',
-                address: {
-                    street: 'TBComplex 0812',
-                    zipCode: '88888',
-                    country: 'Vietnam'
-                },
-                email: 'lamutd0812@gmail.com'
-            },
-            deliveryMethod: 'COD'
+        const queryParams = [];
+        for (let i in this.state.ingredients){
+            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
         }
-
-        axios.post('/orders.json', order)
-            .then(response => {
-                this.setState({ loading: false, purchasing: false });
-            })
-            .catch(error => {
-                this.setState({ loading: false, purchasing: false });
-            });
-        //Note: .json extensions: use with firebase only.  
+        queryParams.push('price=' + this.state.totalPrice);
+        const queryString = queryParams.join('&');
+        this.props.history.push({
+            pathname: '/checkout',
+            search: '?' + queryString
+        });
     }
     //#endregion
+
     render() {
         const disabledInfo = {
             ...this.state.ingredients
@@ -158,7 +146,7 @@ class BurgerBuilder extends Component {
                     {orderSumary}
                 </Modal>
                 {burger}
-            </Aux>
+            </Aux>          
         );
     }
 }
