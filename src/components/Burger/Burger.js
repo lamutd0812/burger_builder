@@ -3,7 +3,7 @@ import classes from './Burger.module.css';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
 const burger = (props) => {
-    console.log(props);
+    //console.log(props);
     let transformedIngredients = Object.keys(props.ingredients)
         .map(igKey => {
             return [...Array(props.ingredients[igKey])].map((_, i) => {
@@ -14,7 +14,7 @@ const burger = (props) => {
             return arr.concat(el);
         }, []);
         // more about this: https://techmaster.vn/posts/34372/hieu-ve-map-filter-va-reduce-trong-javascript
-    console.log(transformedIngredients);
+    //console.log(transformedIngredients);
 
     if (transformedIngredients.length === 0) {
         transformedIngredients = <p>Please start adding ingredients!</p>

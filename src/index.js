@@ -12,8 +12,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-//setup redux devtools
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+//setup redux devtools; //334: process.env.NODE_ENV==='development' => config redux devtools only can see in development enviroment
+const composeEnhancers = process.env.NODE_ENV==='development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
 const rootReducer = combineReducers({
     burgerBuilder: burgerBuilderReducer,
