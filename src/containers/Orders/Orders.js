@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import Order from '../../components/Order/Order';
 import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -7,36 +7,29 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../store/actions/index';
 
-class Orders extends Component {
-    componentDidMount() {
-        this.props.onFetchOrders(this.props.token, this.props.userId);
+const Orders = props => {
+    const { onFetchOrders, token, userId } = props;
+    useEffect(() => {
+        onFetchOrders(token, userId);
+    }, [onFetchOrders, token, userId]);
+
+    let orders = <Spinner />;
+    if (!props.loading) {
+        orders = props.orders.map(order => (
+            <Order
+                key={order.id}
+                id={order.id}
+                ingredients={order.ingredients}
+                price={order.price} />
+        ));
     }
 
-    render() {
-        // const orders = !this.props.loading ? this.props.orders.map(order => (
-        //     <Order
-        //         key={order.id}
-        //         id={order.id}
-        //         ingredients={order.ingredients}
-        //         price={order.price} />)) : <Spinner />; // another way
-        let orders = <Spinner />;
-        if (!this.props.loading) {
-            orders = this.props.orders.map(order => (
-                <Order
-                    key={order.id}
-                    id={order.id}
-                    ingredients={order.ingredients}
-                    price={order.price} />
-            ));
-        }
-
-        return (
-            <div>
-                <p style={{ textAlign: 'center', fontSize: '1.5em' }}><strong>YOUR ORDERS</strong></p>
-                {orders}
-            </div>
-        );
-    }
+    return (
+        <div>
+            <p style={{ textAlign: 'center', fontSize: '1.5em' }}><strong>YOUR ORDERS</strong></p>
+            {orders}
+        </div>
+    );
 }
 
 const mapStateToProps = (state) => {
